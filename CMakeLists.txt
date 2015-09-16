@@ -152,16 +152,7 @@ endif()
 create_revision_file(${CMAKE_BINARY_DIR}/revision ${INSTALL_ROOT})
 
 # Project meta files
-install(FILES ${CMAKE_BINARY_DIR}/revision DESTINATION ${INSTALL_ROOT} COMPONENT dev)
-
-if(NOT WIN32) # this leads to deployment of multiple revision files for unix package managers
-    if(NOT OPTION_BUILD_STATIC)
-        install(FILES ${CMAKE_BINARY_DIR}/revision DESTINATION ${INSTALL_ROOT} COMPONENT runtime)
-    endif()
-    install(FILES ${CMAKE_BINARY_DIR}/revision DESTINATION ${INSTALL_ROOT} COMPONENT examples)
-    install(FILES ${CMAKE_BINARY_DIR}/revision DESTINATION ${INSTALL_ROOT} COMPONENT tools)
-endif()
-
+install(FILES ${CMAKE_BINARY_DIR}/revision DESTINATION ${INSTALL_ROOT})
 install(FILES AUTHORS DESTINATION ${INSTALL_ROOT})
 install(FILES LICENSE DESTINATION ${INSTALL_ROOT})
 
