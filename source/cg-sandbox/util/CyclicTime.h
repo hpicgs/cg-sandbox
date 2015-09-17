@@ -1,23 +1,13 @@
 
 #pragma once
 
-#include <chrono>
-
 #include "ChronoTimer.h"
-
-enum class CyclingStatus : unsigned int
-{
-    TimeCycling
-,   TimePausing
-};
 
 class CyclicTime
 {
     using value_type = double;
 public:
-    CyclicTime(
-        value_type time
-    ,   value_type secondsPerCycle);
+    CyclicTime(value_type secondsPerCycle);
 
 	~CyclicTime();
 
@@ -26,20 +16,19 @@ public:
     value_type time() const;
     value_type normalizedTime() const;
 
-	void start(bool update = false);
-	void pause(bool update = false);
-    void reset(bool update = false);
-    void stop (bool update = false);
+    void start();
+    void pause();
+    void reset();
+    void stop();
 
     value_type getSecondsPerCycle() const;
-    value_type setSecondsPerCycle(value_type secondsPerCycle);
+    void setSecondsPerCycle(value_type secondsPerCycle);
 
     bool isRunning() const;
 
 protected:
-    void initialize();
-
-    ChronoTimer::nano elapsed() const;
-protected:
     ChronoTimer m_timer;
+
+    value_type m_secondsPerCycle;
+    value_type m_current;
 };

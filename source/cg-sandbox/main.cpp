@@ -4,8 +4,8 @@
 #pragma comment(linker, "/SUBSYSTEM:WINDOWS /entry:mainCRTStartup")
 #endif
 
-#include "Application.h"
-#include "Viewer.h"
+#include "ui/Application.h"
+#include "ui/Viewer.h"
 
 int main(int argc, char * argv[])
 {

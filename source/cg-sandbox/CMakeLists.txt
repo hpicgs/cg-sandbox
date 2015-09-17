@@ -51,6 +51,9 @@ set(sources
     painter/AbstractPainter.h
     painter/Painter.cpp
     painter/Painter.h
+    painter/OpenGLContextDescription.h
+    painter/OpenGL.h
+    painter/OpenGL.hpp
     
     util/ChronoTimer.cpp
     util/ChronoTimer.h
