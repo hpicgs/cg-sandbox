@@ -22,7 +22,7 @@ endfunction()
 
 # Extract entries matching a given regex from a list
 
-function(list_extract OUTPUT REGEX)
+macro(list_extract OUTPUT REGEX)
 
     foreach(FILENAME ${ARGN})
         if(${FILENAME} MATCHES "${REGEX}")
@@ -30,7 +30,7 @@ function(list_extract OUTPUT REGEX)
         endif()
     endforeach()
 
-endfunction()
+endmacro()
 
 
 

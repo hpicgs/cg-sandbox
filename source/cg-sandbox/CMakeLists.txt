@@ -17,22 +17,11 @@ find_package(Qt5Widgets 5.1 REQUIRED) # this is important in order to get uic wo
 find_package(Qt5OpenGL  5.1 REQUIRED)
 find_package(ASSIMP         REQUIRED)
 
-# http://qt-project.org/forums/viewthread/30006/
-if(MSVC)
-    cmake_policy(SET CMP0020 NEW)
-endif()
-
-set(CMAKE_AUTOMOC ON)
-set(AUTOMOC_MOC_OPTIONS PROPERTIES FOLDER CMakeAutomocTargets)
-
-# Probably works in the next cmake release -> http://www.cmake.org/Bug/view.php?id=13788
-# What we do not want is automocs beside the project -> http://www.cmake.org/Bug/view.php?id=13688
-set_property(GLOBAL PROPERTY AUTOMOC_FOLDER CMakeAutomocTargets)
-
 
 # Includes
 
 include_directories(
+    ${CMAKE_CURRENT_BINARY_DIR}
     ${ASSIMP_INCLUDE_DIRS}
     ${GLBINDING_INCLUDE_DIRS}
     ${GLOBJECTS_INCLUDE_DIRS}
@@ -51,17 +40,32 @@ set(libs
 
 set(sources
     main.cpp
-    Application.cpp
-    Application.h
+    
+    ui/Application.cpp
+    ui/Application.h
+    ui/Viewer.cpp
+    ui/Viewer.h
+    ui/Viewer.ui
+    
+    painter/AbstractPainter.cpp
+    painter/AbstractPainter.h
+    painter/Painter.cpp
+    painter/Painter.h
+    
+    util/ChronoTimer.cpp
+    util/ChronoTimer.h
+    util/CyclicTime.cpp
+    util/CyclicTime.h
 )
 
 
 # Build executable
 
-list_extract(uis "\\\\.ui$" ${sources})
+list_extract(uis ".*\\\\.ui$" ${sources})
+
 qt5_wrap_ui(uihs ${uis})
 
-add_executable(${target} ${sources})
+add_executable(${target} ${sources} ${uihs})
 
 target_link_libraries(${target} ${libs})
 qt5_use_modules(${target} Core Gui Widgets OpenGL)

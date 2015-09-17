@@ -5,10 +5,14 @@
 #endif
 
 #include "Application.h"
+#include "Viewer.h"
 
 int main(int argc, char * argv[])
 {
     Application app(argc, argv);
+
+    Viewer viewer;
+    viewer.show();
 
     return app.exec();
 }
