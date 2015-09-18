@@ -9,11 +9,11 @@
 
 #include "painter/OpenGL.h"
 
-class DemoPainter : public AbstractPainter, protected OpenGL
+class DemoPainter32 : public AbstractPainter, protected OpenGL
 {
 public:
-    DemoPainter();
-    virtual ~DemoPainter();
+    DemoPainter32();
+    virtual ~DemoPainter32();
 
     virtual void initialize(QOpenGLContext * context) override;
     virtual void deinitialize() override;

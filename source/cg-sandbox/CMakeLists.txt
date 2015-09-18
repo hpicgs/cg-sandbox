@@ -41,8 +41,10 @@ set(libs
 
 set(sources
     main.cpp
-    DemoPainter.cpp
-    DemoPainter.h
+    DemoPainter21.cpp
+    DemoPainter21.h
+    DemoPainter32.cpp
+    DemoPainter32.h
     
     ui/Application.cpp
     ui/Application.h

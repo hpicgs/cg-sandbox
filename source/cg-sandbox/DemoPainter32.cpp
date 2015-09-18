@@ -1,4 +1,4 @@
-#include "DemoPainter.h"
+#include "DemoPainter32.h"
 
 #include <QOpenGLContext>
 
@@ -6,15 +6,15 @@
 
 #include <array>
 
-DemoPainter::DemoPainter()
+DemoPainter32::DemoPainter32()
 {
 }
 
-DemoPainter::~DemoPainter()
+DemoPainter32::~DemoPainter32()
 {
 }
 
-void DemoPainter::initialize(QOpenGLContext * context)
+void DemoPainter32::initialize(QOpenGLContext * context)
 {
     assert(context);
 
@@ -66,7 +66,7 @@ void DemoPainter::initialize(QOpenGLContext * context)
     m_gl->glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 }
 
-void DemoPainter::deinitialize()
+void DemoPainter32::deinitialize()
 {
     delete m_vertexBuffer;
     delete m_textureCoordinateBuffer;
@@ -74,7 +74,7 @@ void DemoPainter::deinitialize()
     delete m_program;
 }
 
-const OpenGLContextDescription & DemoPainter::context() const
+const OpenGLContextDescription & DemoPainter32::context() const
 {
     static OpenGLContextDescription description = {
         3, 2, true, true, false
@@ -83,14 +83,14 @@ const OpenGLContextDescription & DemoPainter::context() const
     return description;
 }
 
-const QStringList & DemoPainter::extensions() const
+const QStringList & DemoPainter32::extensions() const
 {
     static QStringList extensionList;
 
     return extensionList;
 }
 
-void DemoPainter::paint(CyclicTime::value_type /*time*/)
+void DemoPainter32::paint(CyclicTime::value_type /*time*/)
 {
     m_gl->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -103,6 +103,6 @@ void DemoPainter::paint(CyclicTime::value_type /*time*/)
     m_program->release();
 }
 
-void DemoPainter::resize(const QSize & /*size*/)
+void DemoPainter32::resize(const QSize & /*size*/)
 {
 }

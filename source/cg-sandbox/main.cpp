@@ -9,15 +9,16 @@
 #include "ui/Application.h"
 #include "ui/Viewer.h"
 
-#include "DemoPainter.h"
+#include "DemoPainter21.h"
+#include "DemoPainter32.h"
 
 int main(int argc, char * argv[])
 {
     Application app(argc, argv);
 
     QScopedPointer<Viewer> viewer(new Viewer);
-    QScopedPointer<AbstractPainter> demoPainter(new DemoPainter);
-    QScopedPointer<AbstractPainter> demoPainter2(new DemoPainter);
+    QScopedPointer<AbstractPainter> demoPainter(new DemoPainter21);
+    QScopedPointer<AbstractPainter> demoPainter2(new DemoPainter32);
 
     viewer->addPainter("Demo", demoPainter.data());
     viewer->addPainter("Demo 2", demoPainter2.data());
