@@ -1,6 +1,7 @@
 #include "CyclicTime.h"
 
 #include <cassert>
+#include <algorithm>
 
 CyclicTime::CyclicTime(value_type secondsPerCycle)
 :   m_paused(false)
@@ -21,7 +22,9 @@ CyclicTime::value_type CyclicTime::time() const
         return m_pausedTime;
     }
 
-    return std::chrono::duration_cast<std::chrono::duration<value_type>>(m_timer.elapsed()).count() / m_secondsPerCycle;
+    const auto elapsedTime = std::chrono::duration_cast<std::chrono::duration<value_type>>(m_timer.elapsed()).count();
+
+    return elapsedTime - (m_secondsPerCycle * std::floor(elapsedTime / m_secondsPerCycle));
 }
 
 CyclicTime::value_type CyclicTime::normalizedTime() const

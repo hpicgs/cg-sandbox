@@ -36,6 +36,7 @@ public slots:
     void mouseChanged(const QPoint & mouse);
     void objChanged(const QVector3D & obj);
     void timeChanged(float timef);
+    void canvasChanged(int);
 
 protected slots:
     void on_toggleFullScreenAction_triggered(bool checked);
@@ -61,6 +62,7 @@ protected:
 protected:
 	const QScopedPointer<Ui_Viewer> m_ui;
     QList<RegisteredPainter> m_registeredPainters;
+    Canvas * m_currentCanvas;
 
     QLabel * m_fpsLabel;
     QLabel * m_mouseLabel;

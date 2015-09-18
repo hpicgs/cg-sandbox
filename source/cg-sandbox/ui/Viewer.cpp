@@ -28,6 +28,7 @@ Viewer::Viewer(QWidget * parent
 
 : QMainWindow(parent, flags)
 , m_ui(new Ui_Viewer)
+, m_currentCanvas(nullptr)
 , m_fullscreenShortcut(nullptr)
 , m_swapIntervalShortcut(nullptr)
 , m_toggleTimeShortcut(nullptr)
@@ -54,15 +55,16 @@ void Viewer::addPainter(const QString & name, AbstractPainter * painter)
 {
     Canvas * canvas = new Canvas(painter->context(), painter);
 
-    m_ui->canvasSelection->addTab(canvas, name);
-
-    connect(canvas, SIGNAL(fpsUpdate(float)), this, SLOT(fpsChanged(float)));
-
     m_registeredPainters << RegisteredPainter{
         name,
         painter,
         canvas
     };
+
+    m_ui->canvasSelection->addTab(canvas, name);
+
+    connect(canvas, SIGNAL(fpsUpdate(float)), this, SLOT(fpsChanged(float)));
+    connect(canvas, SIGNAL(timeUpdate(float)), this, SLOT(timeChanged(float)));
 }
 
 void Viewer::restore()
@@ -83,6 +85,8 @@ void Viewer::store()
 
 void Viewer::setup()
 {
+    connect(m_ui->canvasSelection, SIGNAL(currentChanged(int)), this, SLOT(canvasChanged(int)));
+
     // ToDo: this seems to be a generic problem (should be done by qt main window itself but....)
     //       We need to parse all available shortcuts via any menubars and connect those...
 
@@ -123,12 +127,9 @@ void Viewer::mouseChanged(const QPoint & mouse)
         .arg(mouse.x(), 4, 10, QChar('0')).arg(mouse.y(), 4, 10, QChar('0')));
 }
 
-void Viewer::timeChanged(float timef)
+void Viewer::timeChanged(float time)
 {
-    std::stringstream s;
-    s << " " << std::setprecision(3) << std::setfill('0') << std::setw(3) << timef << " time ";
-
-    m_timeLabel->setText(QString::fromStdString(s.str()));
+    m_timeLabel->setText(QString("time %1").arg(time, 1, 'f', 3, '0'));
 }
 
 void Viewer::objChanged(const QVector3D & obj)
@@ -215,4 +216,19 @@ void Viewer::on_reloadShaders_triggered(bool /*checked*/)
 void Viewer::reloadShaders()
 {
     //FileAssociatedShader::allChanged();
+}
+
+void Viewer::canvasChanged(int index)
+{
+    if (m_currentCanvas)
+    {
+        m_currentCanvas->setActive(false);
+    }
+
+    m_currentCanvas = m_registeredPainters.value(index).canvas;
+
+    if (m_currentCanvas)
+    {
+        m_currentCanvas->setActive(true);
+    }
 }

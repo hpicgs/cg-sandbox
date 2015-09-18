@@ -10,6 +10,7 @@ class AbstractPainter;
 class Camera;
 class Navigation;
 class ChronoTimer;
+class CyclicTime;
 
 class Canvas : public QOpenGLWidget
 {
@@ -30,10 +31,14 @@ public:
 
 signals:
     void fpsUpdate(float fps);
+    void mouseUpdate(const QPoint & mouse);
+    void timeUpdate(float timef);
 
 protected:
     AbstractPainter * m_painter;
 
+    bool m_active;
     bool m_continuousRepaint;
     QScopedPointer<ChronoTimer> m_fpsTimer;
+    QScopedPointer<CyclicTime> m_virtualTime;
 };

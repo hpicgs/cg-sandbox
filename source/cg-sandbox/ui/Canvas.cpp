@@ -13,6 +13,7 @@
 
 Canvas::Canvas(const QSurfaceFormat & format, AbstractPainter * painter)
 : m_painter(painter)
+, m_active(false)
 , m_continuousRepaint(true)
 {
     assert(painter != nullptr);
@@ -48,6 +49,12 @@ QSurfaceFormat Canvas::createFormat(const OpenGLContextDescription & description
 void Canvas::initializeGL()
 {
     m_painter->initialize(context());
+    m_virtualTime.reset(new CyclicTime(10.0));
+
+    if (!m_active)
+    {
+        m_virtualTime->pause();
+    }
 }
 
 void Canvas::paintGL()
@@ -66,7 +73,11 @@ void Canvas::paintGL()
         m_fpsTimer.reset(new ChronoTimer());
     }
 
-    m_painter->paint(0);
+    const auto time = m_virtualTime->normalizedTime();
+
+    emit(timeUpdate(time));
+
+    m_painter->paint(time);
 
     if (m_continuousRepaint)
     {
@@ -81,12 +92,25 @@ void Canvas::resizeGL(int w, int h)
 
 void Canvas::setActive(bool on)
 {
-    if (on)
+    m_active = on;
+
+    if (m_active)
     {
-        m_fpsTimer->reset();
+        if (m_fpsTimer)
+        {
+            m_fpsTimer->reset();
+        }
+
+        if (m_virtualTime)
+        {
+            m_virtualTime->pause();
+        }
     }
     else
     {
-
+        if (m_virtualTime)
+        {
+            m_virtualTime->pause();
+        }
     }
 }
