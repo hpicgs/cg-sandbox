@@ -3,6 +3,7 @@
 #include <cassert>
 
 #include <QSurfaceFormat>
+#include <QOpenGLContext>
 
 #include "painter/OpenGLContextDescription.h"
 #include "painter/AbstractPainter.h"
@@ -38,7 +39,7 @@ QSurfaceFormat Canvas::createFormat(const OpenGLContextDescription & description
 
 void Canvas::initializeGL()
 {
-    m_painter->initialize();
+    m_painter->initialize(context());
 }
 
 void Canvas::paintGL()

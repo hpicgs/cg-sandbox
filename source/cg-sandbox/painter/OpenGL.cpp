@@ -1,29 +1,16 @@
 
-#pragma once
-
 #include "OpenGL.h"
-
-#include <qgl.h>
 
 #include <QString>
 #include <QOpenGLTexture>
 #include <QOpenGLShader>
 #include <QOpenGLShaderProgram>
 
-template <typename OpenGLFunctions>
-OpenGL<OpenGLFunctions>::OpenGL(OpenGLFunctions & gl)
-: m_gl(gl)
+OpenGL::OpenGL()
 {
 }
 
-template <typename OpenGLFunctions>
-void OpenGL<OpenGLFunctions>::initialize()
-{
-    m_gl.initializeOpenGLFunctions();
-}
-
-template <typename OpenGLFunctions>
-QOpenGLTexture * OpenGL<OpenGLFunctions>::createTexture2D(const QString & fileName)
+QOpenGLTexture * OpenGL::createTexture2D(const QString & fileName)
 {
     QImage image(fileName);
 
@@ -34,11 +21,10 @@ QOpenGLTexture * OpenGL<OpenGLFunctions>::createTexture2D(const QString & fileNa
     texture->setWrapMode(QOpenGLTexture::DirectionS, QOpenGLTexture::ClampToEdge);
     texture->setWrapMode(QOpenGLTexture::DirectionT, QOpenGLTexture::ClampToEdge);
 
-    texture->create();
+    return texture;
 }
 
-template <typename OpenGLFunctions>
-QOpenGLShader * OpenGL<OpenGLFunctions>::createShader(QOpenGLShader::ShaderType type, const QString & fileName)
+QOpenGLShader * OpenGL::createShader(QOpenGLShader::ShaderType type, const QString & fileName)
 {
     QOpenGLShader * shader = new QOpenGLShader(type);
 
@@ -47,8 +33,7 @@ QOpenGLShader * OpenGL<OpenGLFunctions>::createShader(QOpenGLShader::ShaderType 
     return shader;
 }
 
-template <typename OpenGLFunctions>
-QOpenGLShaderProgram * OpenGL<OpenGLFunctions>::createProgram(const QString & computeShaderFileName)
+QOpenGLShaderProgram * OpenGL::createProgram(const QString & computeShaderFileName)
 {
     QOpenGLShaderProgram * program = new QOpenGLShaderProgram();
 
@@ -58,8 +43,7 @@ QOpenGLShaderProgram * OpenGL<OpenGLFunctions>::createProgram(const QString & co
     return program;
 }
 
-template <typename OpenGLFunctions>
-QOpenGLShaderProgram * OpenGL<OpenGLFunctions>::createProgram(
+QOpenGLShaderProgram * OpenGL::createProgram(
     const QString & vertexShaderFileName
 ,   const QString & fragmentShaderFileName)
 {
@@ -72,8 +56,7 @@ QOpenGLShaderProgram * OpenGL<OpenGLFunctions>::createProgram(
     return program;
 }
 
-template <typename OpenGLFunctions>
-QOpenGLShaderProgram * OpenGL<OpenGLFunctions>::createProgram(
+QOpenGLShaderProgram * OpenGL::createProgram(
     const QString & vertexShaderFileName
 ,   const QString & geometryShaderFileName
 ,   const QString & fragmentShaderFileName)
@@ -88,8 +71,7 @@ QOpenGLShaderProgram * OpenGL<OpenGLFunctions>::createProgram(
     return program;
 }
 
-template <typename OpenGLFunctions>
-QOpenGLShaderProgram * OpenGL<OpenGLFunctions>::createProgram(
+QOpenGLShaderProgram * OpenGL::createProgram(
     const QString & vertexShaderFileName
 ,   const QString & tessellationControlShaderFileName
 ,   const QString & tessellationEvaluationShaderFileName
@@ -106,8 +88,7 @@ QOpenGLShaderProgram * OpenGL<OpenGLFunctions>::createProgram(
     return program;
 }
 
-template <typename OpenGLFunctions>
-QOpenGLShaderProgram * OpenGL<OpenGLFunctions>::createProgram(
+QOpenGLShaderProgram * OpenGL::createProgram(
     const QString & vertexShaderFileName
 ,   const QString & tessellationControlShaderFileName
 ,   const QString & tessellationEvaluationShaderFileName

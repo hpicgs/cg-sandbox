@@ -7,6 +7,8 @@
 #include "OpenGLContextDescription.h"
 #include "util/CyclicTime.h"
 
+class QOpenGLContext;
+
 class Camera;
 
 class AbstractPainter
@@ -18,7 +20,7 @@ public:
     void setCamera(Camera * camera);
     Camera * camera();
 
-    virtual void initialize() = 0;
+    virtual void initialize(QOpenGLContext * context) = 0;
     virtual void deinitialize() = 0;
 
     virtual const OpenGLContextDescription & context() const = 0;

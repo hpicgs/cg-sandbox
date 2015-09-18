@@ -65,8 +65,8 @@ set(sources
     painter/FileAssociatedTexture.cpp
     painter/FileAssociatedTexture.h
     painter/OpenGLContextDescription.h
+    painter/OpenGL.cpp
     painter/OpenGL.h
-    painter/OpenGL.hpp
     
     util/CachedValue.h
     util/CachedValue.hpp

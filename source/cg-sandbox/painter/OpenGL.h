@@ -6,13 +6,10 @@ class QString;
 class QOpenGLTexture;
 class QOpenGLShaderProgram;
 
-template <typename OpenGLFunctions>
 class OpenGL
 {
 public:
-    OpenGL(OpenGLFunctions & gl);
-
-    void initialize();
+    OpenGL();
 
     QOpenGLTexture * createTexture2D(const QString & fileName);
 
@@ -41,9 +38,4 @@ public:
     ,   const QString & tessellationEvaluationShaderFileName
     ,   const QString & geometryShaderFileName
     ,   const QString & fragmentShaderFileName);
-
-protected:
-    OpenGLFunctions & m_gl;
 };
-
-#include "OpenGL.hpp"
