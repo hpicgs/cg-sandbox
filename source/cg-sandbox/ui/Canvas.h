@@ -41,4 +41,13 @@ protected:
     bool m_continuousRepaint;
     QScopedPointer<ChronoTimer> m_fpsTimer;
     QScopedPointer<CyclicTime> m_virtualTime;
+
+protected:
+    virtual void keyPressEvent        (QKeyEvent   * event) override;
+    virtual void keyReleaseEvent      (QKeyEvent   * event) override;
+    virtual void mouseMoveEvent       (QMouseEvent * event) override;
+    virtual void mousePressEvent      (QMouseEvent * event) override;
+    virtual void mouseReleaseEvent    (QMouseEvent * event) override;
+    virtual void mouseDoubleClickEvent(QMouseEvent * event) override;
+    virtual void wheelEvent           (QWheelEvent * event) override;
 };

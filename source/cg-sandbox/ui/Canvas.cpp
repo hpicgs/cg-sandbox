@@ -5,6 +5,7 @@
 #include <QSurfaceFormat>
 #include <QOpenGLContext>
 #include <QDebug>
+#include <QMouseEvent>
 
 #include "util/ChronoTimer.h"
 #include "util/CyclicTime.h"
@@ -20,6 +21,8 @@ Canvas::Canvas(const QSurfaceFormat & format, AbstractPainter * painter)
     assert(painter != nullptr);
 
     setFormat(format);
+    setFocusPolicy(Qt::TabFocus);
+    setMouseTracking(true);
 }
 
 Canvas::Canvas(const OpenGLContextDescription & description, AbstractPainter * painter)
@@ -118,4 +121,39 @@ void Canvas::setActive(bool on)
             m_virtualTime->pause();
         }
     }
+}
+
+void Canvas::keyPressEvent(QKeyEvent   * event)
+{
+    Q_UNUSED(event);
+}
+
+void Canvas::keyReleaseEvent(QKeyEvent   * event)
+{
+    Q_UNUSED(event);
+}
+
+void Canvas::mouseMoveEvent(QMouseEvent * event)
+{
+    emit(mouseUpdate(event->pos()));
+}
+
+void Canvas::mousePressEvent(QMouseEvent * event)
+{
+    Q_UNUSED(event);
+}
+
+void Canvas::mouseReleaseEvent(QMouseEvent * event)
+{
+    Q_UNUSED(event);
+}
+
+void Canvas::mouseDoubleClickEvent(QMouseEvent * event)
+{
+    Q_UNUSED(event);
+}
+
+void Canvas::wheelEvent(QWheelEvent * event)
+{
+    Q_UNUSED(event);
 }

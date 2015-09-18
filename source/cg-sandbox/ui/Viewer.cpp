@@ -65,6 +65,7 @@ void Viewer::addPainter(const QString & name, AbstractPainter * painter)
 
     connect(canvas, SIGNAL(fpsUpdate(float)), this, SLOT(fpsChanged(float)));
     connect(canvas, SIGNAL(timeUpdate(float)), this, SLOT(timeChanged(float)));
+    connect(canvas, SIGNAL(mouseUpdate(QPoint)), this, SLOT(mouseChanged(QPoint)));
 }
 
 void Viewer::restore()
@@ -129,7 +130,7 @@ void Viewer::mouseChanged(const QPoint & mouse)
 
 void Viewer::timeChanged(float time)
 {
-    m_timeLabel->setText(QString("time %1").arg(time, 1, 'f', 3, '0'));
+    m_timeLabel->setText(QString(" time %1 ").arg(time, 1, 'f', 3, '0'));
 }
 
 void Viewer::objChanged(const QVector3D & obj)
