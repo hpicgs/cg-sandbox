@@ -18,6 +18,9 @@ public:
     AbstractPainter();
     virtual ~AbstractPainter();
 
+    virtual Camera * createCamera();
+    virtual Navigation * createNavigation();
+
     Camera * camera();
     Navigation * navigation();
 
@@ -32,5 +35,5 @@ public:
 
 protected:
     QScopedPointer<Camera> m_camera;
-    //QScopedPointer<Navigation> m_navigation;
+    QScopedPointer<Navigation> m_navigation;
 };

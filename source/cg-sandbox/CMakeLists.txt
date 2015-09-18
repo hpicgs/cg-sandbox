@@ -46,6 +46,9 @@ set(sources
     DemoPainter32.cpp
     DemoPainter32.h
     
+    interaction/Navigation.cpp
+    interaction/Navigation.h
+    
     ui/Application.cpp
     ui/Application.h
     ui/Canvas.cpp
