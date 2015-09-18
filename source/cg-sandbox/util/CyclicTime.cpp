@@ -1,5 +1,6 @@
 #include "CyclicTime.h"
 
+#include <cmath>
 #include <cassert>
 #include <algorithm>
 
