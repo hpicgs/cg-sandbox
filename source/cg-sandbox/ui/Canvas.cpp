@@ -4,6 +4,7 @@
 
 #include <QSurfaceFormat>
 #include <QOpenGLContext>
+#include <QDebug>
 
 #include "util/ChronoTimer.h"
 #include "util/CyclicTime.h"
@@ -48,6 +49,10 @@ QSurfaceFormat Canvas::createFormat(const OpenGLContextDescription & description
 
 void Canvas::initializeGL()
 {
+    const auto currentFormat = format();
+
+    qDebug() << QString("Created OpenGL Context with Version %1.%2").arg(currentFormat.version().first).arg(currentFormat.version().second).toStdString().c_str();
+
     m_painter->initialize(context());
     m_virtualTime.reset(new CyclicTime(10.0));
 
