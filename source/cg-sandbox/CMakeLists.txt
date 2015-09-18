@@ -11,16 +11,17 @@ message(STATUS "Application ${target}")
 
 # External packages
 
-find_package(Qt5Core    5.1 REQUIRED)
-find_package(Qt5Gui     5.1 REQUIRED)
-find_package(Qt5Widgets 5.1 REQUIRED) # this is important in order to get uic working 
-find_package(Qt5OpenGL  5.1 REQUIRED)
+find_package(Qt5Core    5.3 REQUIRED)
+find_package(Qt5Gui     5.3 REQUIRED)
+find_package(Qt5Widgets 5.3 REQUIRED) # this is important in order to get uic working 
+find_package(Qt5OpenGL  5.3 REQUIRED)
 find_package(ASSIMP         REQUIRED)
 
 
 # Includes
 
 include_directories(
+    ${CMAKE_CURRENT_SOURCE_DIR}
     ${CMAKE_CURRENT_BINARY_DIR}
     ${ASSIMP_INCLUDE_DIRS}
     ${GLBINDING_INCLUDE_DIRS}
@@ -40,21 +41,35 @@ set(libs
 
 set(sources
     main.cpp
+    DemoPainter.cpp
+    DemoPainter.h
     
     ui/Application.cpp
     ui/Application.h
+    ui/Canvas.cpp
+    ui/Canvas.h
     ui/Viewer.cpp
     ui/Viewer.h
     ui/Viewer.ui
     
     painter/AbstractPainter.cpp
     painter/AbstractPainter.h
-    painter/Painter.cpp
-    painter/Painter.h
+    painter/Camera.cpp
+    painter/Camera.h
+    painter/FileAssociatedAsset.cpp
+    painter/FileAssociatedAsset.h
+    painter/FileAssociatedModel.cpp
+    painter/FileAssociatedModel.h
+    painter/FileAssociatedShader.cpp
+    painter/FileAssociatedShader.h
+    painter/FileAssociatedTexture.cpp
+    painter/FileAssociatedTexture.h
     painter/OpenGLContextDescription.h
     painter/OpenGL.h
     painter/OpenGL.hpp
     
+    util/CachedValue.h
+    util/CachedValue.hpp
     util/ChronoTimer.cpp
     util/ChronoTimer.h
     util/CyclicTime.cpp

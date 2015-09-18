@@ -5,8 +5,9 @@
 
 class CyclicTime
 {
-    using value_type = double;
 public:
+    using value_type = double;
+
     CyclicTime(value_type secondsPerCycle);
 
 	~CyclicTime();

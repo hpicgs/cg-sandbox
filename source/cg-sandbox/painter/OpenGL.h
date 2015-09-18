@@ -1,10 +1,10 @@
 #pragma once
 
-#include <qgl.h>
+#include <QOpenGLShader>
 
-#include <QString>
-#include <QOpenGLShaderProgram>
-#include <QOpenGLTexture>
+class QString;
+class QOpenGLTexture;
+class QOpenGLShaderProgram;
 
 template <typename OpenGLFunctions>
 class OpenGL
@@ -12,7 +12,11 @@ class OpenGL
 public:
     OpenGL(OpenGLFunctions & gl);
 
-    QOpenGLTexture * createTexture(const QString & fileName);
+    void initialize();
+
+    QOpenGLTexture * createTexture2D(const QString & fileName);
+
+    QOpenGLShader * createShader(QOpenGLShader::ShaderType type, const QString & fileName);
 
     QOpenGLShaderProgram * createProgram(const QString & computeShaderFileName);
 
@@ -41,3 +45,5 @@ public:
 protected:
     OpenGLFunctions & m_gl;
 };
+
+#include "OpenGL.hpp"

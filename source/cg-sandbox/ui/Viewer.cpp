@@ -14,6 +14,8 @@
 #include "ui_Viewer.h"
 
 #include "Application.h"
+#include "Canvas.h"
+#include "painter/AbstractPainter.h"
 
 namespace 
 {
@@ -41,12 +43,24 @@ Viewer::Viewer(QWidget * parent
     updateAfterFullScreenToggle();
 }
 
-
 Viewer::~Viewer()
 {
     store();
 
     setCentralWidget(nullptr); // TODO: needed?
+}
+
+void Viewer::addPainter(const QString & name, AbstractPainter * painter)
+{
+    Canvas * canvas = new Canvas(painter->context(), painter);
+
+    m_ui->canvasSelection->addTab(canvas, name);
+
+    m_registeredPainters << RegisteredPainter{
+        name,
+        painter,
+        canvas
+    };
 }
 
 void Viewer::restore()

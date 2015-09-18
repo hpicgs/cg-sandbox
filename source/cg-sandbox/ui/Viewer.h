@@ -5,18 +5,31 @@
 #include <QScopedPointer>
 #include <QLabel>
 #include <QShortcut>
+#include <QList>
 
 class Ui_Viewer;
+
+class AbstractPainter;
+class Canvas;
 
 class Viewer : public QMainWindow
 {
     Q_OBJECT
+
+    struct RegisteredPainter
+    {
+        QString name;
+        AbstractPainter * painter;
+        Canvas * canvas;
+    };
 
 public:
     Viewer(QWidget * parent = nullptr
     ,   Qt::WindowFlags flags = 0);
 
     virtual ~Viewer();
+
+    void addPainter(const QString & name, AbstractPainter * painter);
 
 public slots:
     void fpsChanged(float fps);
@@ -47,6 +60,7 @@ protected:
 
 protected:
 	const QScopedPointer<Ui_Viewer> m_ui;
+    QList<RegisteredPainter> m_registeredPainters;
 
     QLabel * m_fpsLabel;
     QLabel * m_mouseLabel;

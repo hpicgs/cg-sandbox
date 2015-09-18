@@ -1,16 +1,13 @@
 
 #pragma once
 
-#include <QList>
 #include <QSize>
+#include <QStringList>
 
 #include "OpenGLContextDescription.h"
-
-class QStringList;
-class QOpenGLShaderProgram;
+#include "util/CyclicTime.h"
 
 class Camera;
-
 
 class AbstractPainter
 {
@@ -18,19 +15,17 @@ public:
     AbstractPainter();
     virtual ~AbstractPainter();
 
-    virtual const OpenGLContextDescription & context() const;
-    virtual const QStringList & extensions() const;
-
     void setCamera(Camera * camera);
     Camera * camera();
 
-    virtual bool initialize() = 0;
+    virtual void initialize() = 0;
+    virtual void deinitialize() = 0;
 
-    virtual void paint(float timef) = 0;
-    virtual void resize(int width, int height) = 0;
+    virtual const OpenGLContextDescription & context() const = 0;
+    virtual const QStringList & extensions() const = 0;
 
-    virtual void update() = 0;
-    virtual void update(const QList<QOpenGLShaderProgram *> & programs) = 0;
+    virtual void paint(CyclicTime::value_type time) = 0;
+    virtual void resize(const QSize & size) = 0;
 
 protected:
     Camera * m_camera;
