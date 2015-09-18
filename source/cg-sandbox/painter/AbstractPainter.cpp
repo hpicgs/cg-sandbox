@@ -15,12 +15,7 @@ AbstractPainter::~AbstractPainter()
 {
 }
 
-void AbstractPainter::setCamera(Camera * camera)
-{
-    m_camera = camera;
-}
-
 Camera * AbstractPainter::camera()
 {
-    return m_camera;
+    return m_camera.data();
 }

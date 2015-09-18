@@ -17,8 +17,10 @@ int main(int argc, char * argv[])
 
     QScopedPointer<Viewer> viewer(new Viewer);
     QScopedPointer<AbstractPainter> demoPainter(new DemoPainter);
+    QScopedPointer<AbstractPainter> demoPainter2(new DemoPainter);
 
     viewer->addPainter("Demo", demoPainter.data());
+    viewer->addPainter("Demo 2", demoPainter2.data());
     viewer->show();
 
     return app.exec();

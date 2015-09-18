@@ -2,95 +2,30 @@
 
 #include "ChronoTimer.h"
 
-ChronoTimer::ChronoTimer(
-    const bool start
-,   const bool autoUpdate)
-:   m_paused(true)
-,   m_stopped(true)
-,   m_auto(autoUpdate)
+ChronoTimer::ChronoTimer()
 {
-    if (start)
-    {
-        this->start();
-    }
+    reset();
 }
 
 ChronoTimer::~ChronoTimer()
 {
 }
 
-void ChronoTimer::update() const
+void ChronoTimer::reset(const time_point & timePoint)
 {
-    if (m_paused || m_stopped)
-    {
-        return;
-    }
-
-    m_current = clock::now();
+    m_start = timePoint;
 }
 
-bool ChronoTimer::paused() const
+ChronoTimer::nano ChronoTimer::restart()
 {
-    return m_paused;
-}
+    const auto current = clock::now();
+    const auto duration = current - m_start;
+    m_start = current;
 
-bool ChronoTimer::stopped() const
-{
-    return m_stopped;
-}
-
-void ChronoTimer::start()
-{
-    if (!m_paused && !m_stopped)
-    {
-        return;
-    }
-
-    if (!m_stopped && m_paused)
-    {
-        m_paused = false;
-
-        return;
-    }
-
-    if (m_stopped)
-    {
-       m_stopped = false;
-       m_paused = false;
-       m_start = clock::now();
-    }
-}
-
-void ChronoTimer::pause()
-{
-    if (m_paused)
-        return;
-
-    m_current = clock::now();
-    m_paused = true;
-}
-
-void ChronoTimer::stop()
-{
-    m_stopped = true;
+    return duration;
 }
 
 ChronoTimer::nano ChronoTimer::elapsed() const
 {
-    if (m_auto)
-    {
-        update();
-    }
-
-    return m_current - m_start;
-}
-
-void ChronoTimer::setAutoUpdating(const bool autoUpdate)
-{
-    m_auto = autoUpdate;
-}
-
-bool ChronoTimer::autoUpdating() const
-{
-    return m_auto;
+    return clock::now() - m_start;
 }

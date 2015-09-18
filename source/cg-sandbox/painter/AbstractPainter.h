@@ -10,6 +10,7 @@
 class QOpenGLContext;
 
 class Camera;
+class Navigation;
 
 class AbstractPainter
 {
@@ -17,8 +18,8 @@ public:
     AbstractPainter();
     virtual ~AbstractPainter();
 
-    void setCamera(Camera * camera);
     Camera * camera();
+    Navigation * navigation();
 
     virtual void initialize(QOpenGLContext * context) = 0;
     virtual void deinitialize() = 0;
@@ -30,5 +31,6 @@ public:
     virtual void resize(const QSize & size) = 0;
 
 protected:
-    Camera * m_camera;
+    QScopedPointer<Camera> m_camera;
+    //QScopedPointer<Navigation> m_navigation;
 };

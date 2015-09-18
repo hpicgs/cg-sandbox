@@ -56,6 +56,8 @@ void Viewer::addPainter(const QString & name, AbstractPainter * painter)
 
     m_ui->canvasSelection->addTab(canvas, name);
 
+    connect(canvas, SIGNAL(fpsUpdate(float)), this, SLOT(fpsChanged(float)));
+
     m_registeredPainters << RegisteredPainter{
         name,
         painter,
@@ -112,7 +114,7 @@ void Viewer::setup()
 void Viewer::fpsChanged(float fps)
 {
     m_fpsLabel->setText(QString(" %1 fps ")
-        .arg(fps, 2, 'g', 4));
+        .arg(fps, 4, 'f', 0, QChar('0')));
 }
 
 void Viewer::mouseChanged(const QPoint & mouse)
