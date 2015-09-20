@@ -17,13 +17,12 @@ public:
 
     virtual void reload() = 0;
 
-    static void reloadAll();
+    static void process();
+    static void forceReload();
 
 public slots:
-    void reload(const QString & fileName);
+    void invalidate(const QString & fileName);
 
 protected:
     QString m_fileName;
-
-    static QHash<QString, FileAssociatedAsset *> s_instances;
 };

@@ -6,6 +6,8 @@
 #include <QOpenGLShader>
 #include <QOpenGLShaderProgram>
 
+#include "FileAssociatedShader.h"
+
 OpenGL::OpenGL()
 {
 }
@@ -24,20 +26,29 @@ QOpenGLTexture * OpenGL::createTexture2D(const QString & fileName)
     return texture;
 }
 
-QOpenGLShader * OpenGL::createShader(QOpenGLShader::ShaderType type, const QString & fileName)
+FileAssociatedShader * OpenGL::createShader(QOpenGLShader::ShaderType type, const QString & fileName)
 {
     QOpenGLShader * shader = new QOpenGLShader(type);
 
-    shader->compileSourceFile(fileName);
+    FileAssociatedShader * shaderAsset = new FileAssociatedShader(fileName, shader);
+    shaderAsset->reload();
 
-    return shader;
+    return shaderAsset;
+}
+
+void OpenGL::addShader(QOpenGLShaderProgram * program, FileAssociatedShader * shaderAsset)
+{
+    QOpenGLShader * shader = shaderAsset->shader();
+
+    program->addShader(shader);
+    shaderAsset->addDependendProgram(program);
 }
 
 QOpenGLShaderProgram * OpenGL::createProgram(const QString & computeShaderFileName)
 {
     QOpenGLShaderProgram * program = new QOpenGLShaderProgram();
 
-    program->addShader(createShader(QOpenGLShader::Compute, computeShaderFileName));
+    addShader(program, createShader(QOpenGLShader::Compute, computeShaderFileName));
     program->link();
 
     return program;
@@ -49,8 +60,8 @@ QOpenGLShaderProgram * OpenGL::createProgram(
 {
     QOpenGLShaderProgram * program = new QOpenGLShaderProgram();
 
-    program->addShader(createShader(QOpenGLShader::Vertex, vertexShaderFileName));
-    program->addShader(createShader(QOpenGLShader::Fragment, fragmentShaderFileName));
+    addShader(program, createShader(QOpenGLShader::Vertex, vertexShaderFileName));
+    addShader(program, createShader(QOpenGLShader::Fragment, fragmentShaderFileName));
     program->link();
 
     return program;
@@ -63,9 +74,9 @@ QOpenGLShaderProgram * OpenGL::createProgram(
 {
     QOpenGLShaderProgram * program = new QOpenGLShaderProgram();
 
-    program->addShader(createShader(QOpenGLShader::Vertex, vertexShaderFileName));
-    program->addShader(createShader(QOpenGLShader::Geometry, geometryShaderFileName));
-    program->addShader(createShader(QOpenGLShader::Fragment, fragmentShaderFileName));
+    addShader(program, createShader(QOpenGLShader::Vertex, vertexShaderFileName));
+    addShader(program, createShader(QOpenGLShader::Geometry, geometryShaderFileName));
+    addShader(program, createShader(QOpenGLShader::Fragment, fragmentShaderFileName));
     program->link();
 
     return program;
@@ -79,10 +90,10 @@ QOpenGLShaderProgram * OpenGL::createProgram(
 {
     QOpenGLShaderProgram * program = new QOpenGLShaderProgram();
 
-    program->addShader(createShader(QOpenGLShader::Vertex, vertexShaderFileName));
-    program->addShader(createShader(QOpenGLShader::TessellationControl, tessellationControlShaderFileName));
-    program->addShader(createShader(QOpenGLShader::TessellationEvaluation, tessellationEvaluationShaderFileName));
-    program->addShader(createShader(QOpenGLShader::Fragment, fragmentShaderFileName));
+    addShader(program, createShader(QOpenGLShader::Vertex, vertexShaderFileName));
+    addShader(program, createShader(QOpenGLShader::TessellationControl, tessellationControlShaderFileName));
+    addShader(program, createShader(QOpenGLShader::TessellationEvaluation, tessellationEvaluationShaderFileName));
+    addShader(program, createShader(QOpenGLShader::Fragment, fragmentShaderFileName));
     program->link();
 
     return program;
@@ -97,11 +108,11 @@ QOpenGLShaderProgram * OpenGL::createProgram(
 {
     QOpenGLShaderProgram * program = new QOpenGLShaderProgram();
 
-    program->addShader(createShader(QOpenGLShader::Vertex, vertexShaderFileName));
-    program->addShader(createShader(QOpenGLShader::TessellationControl, tessellationControlShaderFileName));
-    program->addShader(createShader(QOpenGLShader::TessellationEvaluation, tessellationEvaluationShaderFileName));
-    program->addShader(createShader(QOpenGLShader::Geometry, geometryShaderFileName));
-    program->addShader(createShader(QOpenGLShader::Fragment, fragmentShaderFileName));
+    addShader(program, createShader(QOpenGLShader::Vertex, vertexShaderFileName));
+    addShader(program, createShader(QOpenGLShader::TessellationControl, tessellationControlShaderFileName));
+    addShader(program, createShader(QOpenGLShader::TessellationEvaluation, tessellationEvaluationShaderFileName));
+    addShader(program, createShader(QOpenGLShader::Geometry, geometryShaderFileName));
+    addShader(program, createShader(QOpenGLShader::Fragment, fragmentShaderFileName));
     program->link();
 
     return program;

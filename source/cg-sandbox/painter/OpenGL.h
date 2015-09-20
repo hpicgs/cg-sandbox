@@ -6,14 +6,14 @@ class QString;
 class QOpenGLTexture;
 class QOpenGLShaderProgram;
 
+class FileAssociatedShader;
+
 class OpenGL
 {
 public:
     OpenGL();
 
     QOpenGLTexture * createTexture2D(const QString & fileName);
-
-    QOpenGLShader * createShader(QOpenGLShader::ShaderType type, const QString & fileName);
 
     QOpenGLShaderProgram * createProgram(const QString & computeShaderFileName);
 
@@ -38,4 +38,9 @@ public:
     ,   const QString & tessellationEvaluationShaderFileName
     ,   const QString & geometryShaderFileName
     ,   const QString & fragmentShaderFileName);
+
+protected:
+    FileAssociatedShader * createShader(QOpenGLShader::ShaderType type, const QString & fileName);
+
+    void addShader(QOpenGLShaderProgram * program, FileAssociatedShader * shaderAsset);
 };

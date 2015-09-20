@@ -12,6 +12,7 @@
 
 #include "painter/OpenGLContextDescription.h"
 #include "painter/AbstractPainter.h"
+#include "painter/FileAssociatedAsset.h"
 
 Canvas::Canvas(const QSurfaceFormat & format, AbstractPainter * painter)
 : m_painter(painter)
@@ -84,6 +85,8 @@ void Canvas::paintGL()
     const auto time = m_virtualTime->normalizedTime();
 
     emit(timeUpdate(time));
+
+    FileAssociatedAsset::process();
 
     m_painter->paint(time);
 
