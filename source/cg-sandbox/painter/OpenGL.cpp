@@ -7,6 +7,7 @@
 #include <QOpenGLShaderProgram>
 
 #include "FileAssociatedShader.h"
+#include "FileAssociatedTexture.h"
 
 OpenGL::OpenGL()
 {
@@ -22,6 +23,8 @@ QOpenGLTexture * OpenGL::createTexture2D(const QString & fileName)
     texture->setMagnificationFilter(QOpenGLTexture::Linear);
     texture->setWrapMode(QOpenGLTexture::DirectionS, QOpenGLTexture::ClampToEdge);
     texture->setWrapMode(QOpenGLTexture::DirectionT, QOpenGLTexture::ClampToEdge);
+
+    new FileAssociatedTexture(fileName, texture);
 
     return texture;
 }
